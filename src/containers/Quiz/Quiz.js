@@ -74,7 +74,6 @@ class Quiz extends React.Component {
       })
 
     }
-
   }
 
   isQuizFinished() {
@@ -88,6 +87,10 @@ class Quiz extends React.Component {
       activeQuestion: 0,
       answerState: null,
     })
+  }
+
+  componentDidMount() {
+    console.log('Quiz ID', this.props)
   }
 
   render() {
