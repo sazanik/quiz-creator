@@ -1,8 +1,9 @@
 import React from "react";
 import classes from './QuizCreator.module.css'
 import Button from "../../components/UI/Button/Button"
-import Input from "../../components/UI/Input/Input";
-import {createControl} from "../../form/formFramework";
+import Input from "../../components/UI/Input/Input"
+import Select from "../../components/UI/Select/Select"
+import {createControl} from "../../form/formFramework"
 
 function createOptionControl(number) {
   return createControl({
@@ -29,6 +30,7 @@ class QuizCreator extends React.Component {
 
   state = {
     quiz: [],
+    rightAnswerId: 1,
     formControls: createFormControls()
   }
 
@@ -40,7 +42,7 @@ class QuizCreator extends React.Component {
 
   }
 
-  /*onchangeHandler = (value, controlName) => {
+  /*onChangeHandler = (value, controlName) => {
 
   }*/
 
@@ -49,7 +51,7 @@ class QuizCreator extends React.Component {
       const control = this.state.formControls[controlName]
 
       return (
-        <React.Fragment key={controlName+index}>
+        <React.Fragment key={controlName + index}>
           <Input
             label={control.label}
             value={control.value}
@@ -57,7 +59,7 @@ class QuizCreator extends React.Component {
             shouldValidate={!!control.validation}
             touched={control.touched}
             errorMessage={control.errorMessage}
-            onChange={e => this.changeHandler(e.target.value, controlName)}
+            onChange={e => this.onChangeHandler(e.target.value, controlName)}
           />
           {index === 0 ? <hr/> : null}
         </React.Fragment>
@@ -66,7 +68,26 @@ class QuizCreator extends React.Component {
     })
   }
 
+  selectChangeHandler = e => {
+    this.setState({
+      rightAnswerId: +e.target.value
+    })
+  }
+
+
   render() {
+    const select = <Select
+      label='Select a right answer'
+      value={this.state.rightAnswerId}
+      onChange={this.selectChangeHandler}
+      options={[
+        {text: 1, value: 1},
+        {text: 2, value: 2},
+        {text: 3, value: 3},
+        {text: 4, value: 4},
+      ]}
+
+    />
     return (
       <div className={classes.QuizCreator}>
         <div>
@@ -76,9 +97,7 @@ class QuizCreator extends React.Component {
 
             {this.renderControls()}
 
-            <select>
-
-            </select>
+            {select}
 
             <Button type='primary' onClick={this.addQuestionHandler}>Add question</Button>
             <Button type='success' onClick={this.createQuizHandler}>Create test</Button>
