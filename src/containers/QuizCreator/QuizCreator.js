@@ -3,6 +3,7 @@ import classes from './QuizCreator.module.css'
 import Button from "../../components/UI/Button/Button"
 import Input from "../../components/UI/Input/Input"
 import Select from "../../components/UI/Select/Select"
+import axios from "../../axios/axios";
 import {createControl, validate, formValidate} from "../../form/formFramework"
 
 
@@ -38,6 +39,7 @@ class QuizCreator extends React.Component {
   }
 
   submitHandler = e => e.preventDefault()
+
   addQuestionHandler = e => {
     e.preventDefault()
 
@@ -68,10 +70,19 @@ class QuizCreator extends React.Component {
   }
 
 
-  createQuizHandler = e => {
+  createQuizHandler = async e => {
     e.preventDefault()
-    console.log(this.state.quiz)
-    //TODO server work
+    try {
+      await axios.post('/quizes.json', this.state.quiz)
+      this.setState({
+        quiz: [],
+        isFormValid: false,
+        rightAnswerId: 1,
+        formControls: createFormControls()
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   changeHandler = (value, controlName) => {

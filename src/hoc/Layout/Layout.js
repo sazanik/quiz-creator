@@ -9,7 +9,6 @@ class Layout extends React.Component {
   }
 
   toggleMenuHandler = () => {
-    console.log(this.state)
     this.setState({
       menu: !this.state.menu
     })
