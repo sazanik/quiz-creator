@@ -25,7 +25,23 @@ export function auth(email, password, isLogin) {
 
     dispatch(authSuccess(data.idToken))
     dispatch(autoLogout(data.expiresIn))
+  }
+}
 
+export function autoLogin() {
+  return dispatch => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      dispatch(logout())
+    } else {
+      const expirationDate = new Date(localStorage.getItem('expirationDate'))
+      if (expirationDate <= new Date()) {
+        dispatch(logout())
+      } else {
+        dispatch(authSuccess(token))
+        dispatch(autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000))
+      }
+    }
   }
 }
 

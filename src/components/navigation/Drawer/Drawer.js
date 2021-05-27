@@ -2,18 +2,15 @@ import React from "react";
 import classes from './Drawer.module.css'
 import {NavLink} from "react-router-dom";
 import Backdrop from "../../UI/Backdrop/Backdrop";
+import {connect} from "react-redux";
 
-const links = [
-  {to: '/', label: 'List', exact: true},
-  {to: '/auth', label: 'Auth', exact: false},
-  {to: '/quiz-creator', label: 'Create test', exact: false},
-]
+
 class Drawer extends React.Component {
 
   clickHandler = () => this.props.onClose()
 
 
-  renderLinks() {
+  renderLinks(links) {
     return links.map((link, index) => {
       return (
         <li key={index}>
@@ -22,7 +19,7 @@ class Drawer extends React.Component {
             exact={link.exact}
             activeClassName={classes.active}
             onClick={this.clickHandler}
-            >
+          >
             {link.label}
           </NavLink>
 
@@ -32,16 +29,27 @@ class Drawer extends React.Component {
   }
 
   render() {
+    console.log('Auth', this.props.isAuthenticated)
     const cls = [classes.Drawer]
+    const links = [{to: '/', label: 'List', exact: true}]
 
     if (!this.props.isOpen) {
       cls.push(classes.close)
     }
+
+    if (this.props.isAuthenticated) {
+      links.push({to: '/quiz-creator', label: 'Create test', exact: false})
+      links.push({to: '/logout', label: 'Logout', exact: false})
+
+    } else {
+      links.push({to: '/auth', label: 'Auth', exact: false})
+    }
+
     return (
       <>
         <nav className={cls.join(' ')}>
           <ul>
-            {this.renderLinks()}
+            {this.renderLinks(links)}
           </ul>
         </nav>
         {this.props.isOpen ? <Backdrop onClick={this.props.onClose}/> : null}
@@ -52,4 +60,4 @@ class Drawer extends React.Component {
 
 }
 
-export default Drawer
+export default connect()(Drawer)
