@@ -6,7 +6,6 @@ import {connect} from "react-redux";
 import {fetchQuizes} from "../../redux/actions/quiz";
 
 class QuizList extends React.Component {
-
   renderQuizes() {
     return this.props.quizes.map(quiz => {
       return (

@@ -17,6 +17,8 @@ const composeEnhancers =
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
+store.subscribe(() => console.log(store.getState()))
+
 const app = (
   <Provider store={store}>
     <BrowserRouter>
