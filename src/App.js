@@ -29,11 +29,11 @@ class App extends React.Component {
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path='/quiz-creator' component={QuizCreator}/>
+          <Route path='/quiz-creator' exact component={QuizCreator}/>
           <Route path='/quiz/:id' component={Quiz}/>
           <Route path='/logout' component={Logout}/>
           <Route path='/' exact component={QuizList}/>
-          <Redirect to='/'/>
+          <Redirect to='/quiz-creator'/>
         </Switch>
       )
     }

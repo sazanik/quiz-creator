@@ -29,7 +29,6 @@ class Drawer extends React.Component {
   }
 
   render() {
-    console.log('Auth', this.props.isAuthenticated)
     const cls = [classes.Drawer]
     const links = [{to: '/', label: 'List', exact: true}]
 
