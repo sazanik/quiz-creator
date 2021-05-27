@@ -53,7 +53,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchQuizes: () => dispatch(fetchQuizes())
   }
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuizList)
